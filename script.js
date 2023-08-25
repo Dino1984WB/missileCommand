@@ -35,9 +35,11 @@ class Explosion {
     constructor(x, y) {
         this.x = x;
         this.y = y;
+        this.lifetime =0;
     }
 
     draw() {
+        this.lifetime++;
         ctx.fillStyle = "yellow";
         ctx.beginPath();
         ctx.arc(this.x, this.y, EXPLOSION_RADIUS, 0, Math.PI * 2);
@@ -80,6 +82,9 @@ function gameLoop() {
     for (const explosion of explosions) {
         explosion.draw();
     }
+
+    // Remove old explosions
+    explosions = explosions.filter(explosion => explosion.lifetime < 50);
 
     // Detect and handle collisions
     detectCollisions();
